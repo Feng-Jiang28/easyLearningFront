@@ -16,14 +16,14 @@
       <section class="c-sort-box unBr">
         <div>
           <!-- /无数据提示 开始-->
-          <section class="no-data-wrap" v-if="data.total==0">
+          <section class="no-data-wrap" v-if = "data.total==0">
             <em class="icon30 no-data-ico">&nbsp;</em>
             <span class="c-666 fsize14 ml10 vam">没有相关数据，小编正在努力整理中...</span>
           </section>
           <!-- /无数据提示 结束-->
-          <article v-if="data.total>0" class="i-teacher-list">
+          <article v-else class="i-teacher-list">
             <ul class="of">
-              <li v-for="teacher in data.items" :key="teacher.id">
+              <li v-for="teacher in data.list" :key="teacher.id">
                 <section class="i-teach-wrap">
                   <div class="i-teach-pic">
                     <a :href="'/teacher/'+teacher.id" :title="teacher.name" target="_blank">
@@ -41,7 +41,7 @@
                   </div>
                 </section>
               </li>
-              
+
             </ul>
             <div class="clear"></div>
           </article>
@@ -99,10 +99,13 @@ import teacherApi from '@/api/teacher'
 export default {
   //异步调用，调用一次
   //params: 相当于之前 this.$route.params.id  等价  params.id
+
   asyncData({ params, error }) {
     return teacherApi.getTeacherList(1,8).then(response => {
-          //this.data = response.data.data
-          return { data: response.data.data }
+          // this.data = response.data.data;
+          // console.log("Thread: " + response.data.data.total + ", size: " + response.data.data.size);
+          return { data: response.data.data };
+
        })
   },
   methods:{
@@ -111,7 +114,8 @@ export default {
     gotoPage(page) {
       teacherApi.getTeacherList(page,8)
         .then(response => {
-          this.data = response.data.data
+          this.data = response.data.data;
+          //console.log("wwswdw" + this.data);
         })
     }
   }

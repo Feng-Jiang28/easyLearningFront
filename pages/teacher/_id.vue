@@ -62,7 +62,7 @@
                   </h3>
                 </div>
               </li>
-             
+
             </ul>
             <div class="clear"></div>
           </article>
@@ -79,6 +79,7 @@ export default {
   asyncData({ params, error }) {
     return teacherApi.getTeacherInfo(params.id)
       .then(response => {
+        // console.log(response.data.data.teacher);
         return {
           teacher: response.data.data.teacher,
           courseList: response.data.data.courseList
